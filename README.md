@@ -13,9 +13,9 @@ This application creates and sends a TOTP token to a phone number. Based on the 
 ### Architectural Decisions
 
 I have chosen not to implement the algorithm for generating tokens *TOTP* or *HOTP* directly. 
-Since there are many libraries and services that offer this functionality to me. 
-Since these algorithms are specified by the IETF via **RFCs 4226 and 6238** I decided to use an external API that implements these specifications 
+Since there are many libraries and services that offer this functionality to me. And since these algorithms are specified by the IETF via **RFCs 4226 and 6238** I decided to use an external API that implements these specifications 
 and provides an abstraction layer that facilitates my work.
+Since providers like Google Authenticator and Twillio Authy implement these specifications I believe they are adhering to the requested requirement.
 In this case I chose to write a Java / Springboot Webflux application that bridges the server application to the authentication client 
 and the tokens generation mechanism. 
 This application implements the external API responsible for generating and sending the token via cell phone, as well as the validation of the generated token. 
