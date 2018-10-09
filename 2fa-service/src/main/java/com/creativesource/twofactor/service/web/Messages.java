@@ -1,12 +1,13 @@
 package com.creativesource.twofactor.service.web;
 
+import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Messages {
 	private static final String BUNDLE_NAME = "com.creativesource.twofactor.service.web.messages"; //$NON-NLS-1$
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, Locale.US);
 
 	private Messages() {
 	}
