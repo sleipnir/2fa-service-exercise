@@ -59,7 +59,10 @@ public class TokenController {
 	public Mono<ResponseEntity<TokenStatus>> validateToken(@RequestParam("code") String code){
 		return tokenService.getTokenStatus(code)
 				.flatMap(response -> response.bodyToMono(TokenStatus.class))
-				.flatMap(tokenStatus -> Mono.just(ResponseEntity.ok(tokenStatus)));
+				.flatMap(tokenStatus -> Mono.just(ResponseEntity.ok(tokenStatus)))
+				.switchIfEmpty(
+						Mono.just(
+								ResponseEntity.notFound().build()));
 	}
 	
 	private Mono<ResponseEntity<TokenResponse>> handleStatus(ClientResponse response){
