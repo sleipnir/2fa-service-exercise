@@ -17,8 +17,8 @@ Since there are many libraries and services that offer this functionality to me.
 Since these algorithms are specified by the IETF via **RFCs 4226 and 6238** I decided to use an external API that implements these specifications 
 and provides an abstraction layer that facilitates my work.
 In this case I chose to write a Java / Springboot Webflux application that bridges the server application to the authentication client 
-and the tokens generation mechanism. This application implements the external API responsible for generating and sending the token via cell phone, 
-as well as the validation of the generated token. 
+and the tokens generation mechanism. 
+This application implements the external API responsible for generating and sending the token via cell phone, as well as the validation of the generated token. 
 This external API is called Notify-e (of which I am a founding member and therefore no cost to use. :-)).
 
 The basic flow of interaction can be described as follows:
@@ -35,7 +35,7 @@ The basic flow of interaction can be described as follows:
 I have defined that the application should provide some minimal security mechanism. And for simplicity I chose to work with a level of authentication 
 and basic authorization.
 For this reason, it is necessary to send in all requests, except for the Hook feature, the Authorization header with the Basic type and the encrypted user 
-and password as defined in RFC2617.
+and password as defined in *RFC2617*.
 The user and password will be informed in the contact email.
 
 #### Dependencies
@@ -224,3 +224,9 @@ $ curl -X GET \
   -H 'Cache-Control: no-cache'
 ```
 **Do not forget to replace the query string 'code' with the value of the token received in your phone.**
+
+### TODO
+
+  - Implement circuit-breaker for cascade failure treatment.
+  - Implement persistence and caching to avoid unnecessary network calls.
+  - Include new validations.
