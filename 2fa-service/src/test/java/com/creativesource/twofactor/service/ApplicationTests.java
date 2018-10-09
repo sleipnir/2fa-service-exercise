@@ -1,4 +1,4 @@
-package com.creativesource.fa.service;
+package com.creativesource.twofactor.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
