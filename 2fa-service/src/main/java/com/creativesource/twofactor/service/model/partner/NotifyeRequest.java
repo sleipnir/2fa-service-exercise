@@ -53,7 +53,7 @@ public @Data class NotifyeRequest implements Serializable {
 	@Valid
 	@JsonIgnore
 	@Builder.Default
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private Map<String, Object> additionalProperties = new HashMap<>();
 
 	@JsonAnyGetter
 	public Map<String, Object> getAdditionalProperties() {

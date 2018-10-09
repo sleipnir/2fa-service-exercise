@@ -24,7 +24,7 @@ import lombok.Getter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "ttl", "redirectTo", "mode", "acceptedOnlyFromSameDomain" })
 public class Token implements Serializable {
-	private final static long serialVersionUID = 6931873650137333560L;
+	private static final long serialVersionUID = 1L;
 
 	@Getter
 	@NotNull
@@ -47,7 +47,7 @@ public class Token implements Serializable {
 	@Valid
 	@JsonIgnore
 	@Builder.Default
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private Map<String, Object> additionalProperties = new HashMap<>();
 
 	@JsonAnyGetter
 	public Map<String, Object> getAdditionalProperties() {

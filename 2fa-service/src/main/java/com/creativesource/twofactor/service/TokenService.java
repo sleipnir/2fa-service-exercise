@@ -7,9 +7,6 @@ import com.creativesource.twofactor.service.model.TokenRequest;
 import reactor.core.publisher.Mono;
 
 public interface TokenService {
-
 	Mono<ClientResponse> sendToken(TokenRequest request);
 	Mono<ClientResponse> getTokenStatus(String code);
-	
-
 }
