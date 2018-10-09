@@ -54,13 +54,13 @@ First of all you should clone this repository:
 $ git clone https://github.com/sleipnir/2fa-service-exercise.git
 
 # chance to directory
-$ cd 2fa-service-exercise
+$ cd 2fa-service-exercise\2fa-service
 
 # compile code
 $ mvn install
 
-# Build docker container image
-docker build -t com.creativesource/2fa-service .
+# On Linux Build docker container image
+$ cd ../; docker build -t com.creativesource/2fa-service .
 
 # if all tests passed then running....
 ```
