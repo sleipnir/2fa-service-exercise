@@ -130,16 +130,20 @@ $ npm install -g localtunnel
 $ lt --port 8080
 your url is: https://lazy-otter-12.localtunnel.me
 
-# Running application
+# And another prompt instance running application. Don´t forget to set HOOK_URL with the correct URL (Or not passed -e parameter!This resource is optional)
+
 $ docker run -d \
-    -p 8080:8080
+    -p 8080:8080 \
     --name 2fa-service \
-    -e HOOK_URL=https://lazy-otter-12.localtunnel.me/auth/tokens/events \
-	--memory=256m
-   2fa-service:latest
+    -e HOOK_URL=https://ancient-wasp-35.localtunnel.me/auth/tokens/events \
+	--memory=512m \
+   com.creativesource/2fa-service:latest
    
-$ docker logs -t -f 2fa-service
+```
+
 # Logs looks like this...
+```sh
+$ docker logs -t -f 2fa-service
 
 Two Factor Authentication Service
 
