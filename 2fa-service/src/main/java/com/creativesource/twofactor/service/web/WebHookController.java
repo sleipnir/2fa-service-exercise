@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 public class WebHookController {
 	
 	@PostMapping("/auth/tokens/events")
-	public Mono<ResponseEntity<?>> event(@RequestBody String request){
+	public Mono<ResponseEntity<Void>> event(@RequestBody String request){
 		log.debug("Request {}", request);
 		return Mono.just(ResponseEntity.ok().build());
 	}
