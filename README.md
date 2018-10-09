@@ -5,6 +5,7 @@ This application creates and sends a TOTP token to a phone number. Based on the 
 
 ### Index
 
+  - Architectural Decisions
   - Dependencies
   - Build Application
   - Running in Windows, Linux, and Docker environments
@@ -230,3 +231,9 @@ $ curl -X GET \
   - Implement circuit-breaker for cascade failure treatment.
   - Implement persistence and caching to avoid unnecessary network calls.
   - Include new validations.
+  - Extract sensitive data such as passwords and tokens from property files and store them on a secure medium. Vault as an example.
+
+### Note
+
+If the external API Token expires please request a new one via email.
+  
