@@ -161,25 +161,34 @@ Two Factor Authentication Service
 2
 ``` 
 
+### Use application
 
+You can test the application in two ways, via Postman or via Curl directly from the command line.
+Import the 2fa-service-api.json file, which is located in the project root, into your Postman application if you wish to run via Postman Collections, or follow the examples below to test directly via CURL
 
+Send Request for create TOTP Token and send This Token to the client via phone number:
 
-/*
-	 * Request Example:
-	 * curl -X POST \
-	 *	  http://localhost:8080/auth/tokens \
-	 *	  -H 'Authorization: Basic c2Vuc2VkaWE6c2Vuc2VkaWEqMTIz' \
-	 *	  -H 'Content-Type: application/json' \
-	 *	  -d '{
-	 *		"countryCode" : "+55",
-	 *		"areaCode" : "11",
-	 *		"phoneNumber" : "959734939",
-	 *		"tokenTTL" : 300
-	 *	}'
-	 * */
-	 
-	 
-/*
-	 * curl -X GET http://localhost:8080/auth/tokens?code=569868 -H 'Authorization: Basic c2Vuc2VkaWE6c2Vuc2VkaWEqMTIz'
-	 * */
-	
+```sh
+$ curl -X POST \
+  http://localhost:8080/auth/tokens \
+  -H 'Authorization: Basic c2Vuc2VkaWE6c2Vuc2VkaWEqMTIz' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json' \
+  -d '{
+	"countryCode" : "+55",
+	"areaCode" : "11",
+	"phoneNumber" : "959734939",
+	"tokenTTL" : 300
+}' 
+```
+**In this request we define that a valid Token must be created, set to expire in 5 minutes and sent to the client whose phone number we enter in Json's phoneNumber attribute.
+Do not forget to enter a valid phone number that you have access to to receive the token.**
+
+Send Request for validate the received token:
+```sh
+$ curl -X GET \
+  'http://localhost:8080/auth/tokens?code=274008' \
+  -H 'Authorization: Basic c2Vuc2VkaWE6c2Vuc2VkaWEqMTIz' \
+  -H 'Cache-Control: no-cache'
+```
+**Do not forget to replace the query string 'code' with the value of the token received in your phone.**
