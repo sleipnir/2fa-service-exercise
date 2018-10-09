@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.creativesource.twofactor.service.TokenService;
 import com.creativesource.twofactor.service.model.TokenRequest;
 import com.creativesource.twofactor.service.model.partner.Message;
 import com.creativesource.twofactor.service.model.partner.NotifyeRequest;
@@ -20,7 +21,8 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
-public final class TokenService {
+public final class NotifyeTokenService implements TokenService {
+	
 	private static final String HOOK_URL_ENV_KEY = "HOOK_URL"; //$NON-NLS-1$
 	private static final String CONTENT_TYPE_HEADER = "Content-Type"; //$NON-NLS-1$
 	private static final String AUTHORIZATION_HEADER = "Authorization"; //$NON-NLS-1$
@@ -29,7 +31,7 @@ public final class TokenService {
 	private final String resourceURI;
 	private final String partnerToken;
 	
-	public TokenService(@Value("${app.partner.token.baseUrl}") final String partnerTokenDomainUrl, 
+	public NotifyeTokenService(@Value("${app.partner.token.baseUrl}") final String partnerTokenDomainUrl, 
 						@Value("${app.partner.token.createRequestUrl}") final String resourceURI,
 						@Value("${app.partner.token.authToken}") final String partnerToken) {
 		
@@ -38,6 +40,10 @@ public final class TokenService {
 		this.partnerToken = partnerToken;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.creativesource.twofactor.service.web.TokenService#sendToken(com.creativesource.twofactor.service.model.TokenRequest)
+	 */
+	@Override
 	public Mono<ClientResponse> sendToken(TokenRequest request) {
 		log.info("Send request to partner"); //$NON-NLS-1$
 		String uriRequest = String.format("%s%s", partnerTokenDomainUrl, resourceURI); //$NON-NLS-1$
@@ -51,7 +57,14 @@ public final class TokenService {
 		  .accept(MediaType.APPLICATION_JSON)
 		  	.exchange();
 	}
+	
+	@Override
+	public Mono<ClientResponse> getTokenStatus(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	
 	private NotifyeRequest createRequestBody(TokenRequest tokenRequest) {
 		return NotifyeRequest.builder()
 				.from(getFrom())
@@ -98,4 +111,5 @@ public final class TokenService {
 				.toString();
 	}
 
+	
 }
