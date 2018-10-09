@@ -16,7 +16,7 @@ public class WebHookController {
 	
 	@PostMapping("/auth/tokens/events")
 	public Mono<ResponseEntity<?>> event(@RequestBody String request){
-		log.info("Request {}", request);
+		log.debug("Request {}", request);
 		return Mono.just(ResponseEntity.ok().build());
 	}
 	

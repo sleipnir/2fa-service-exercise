@@ -45,7 +45,7 @@ public final class NotifyeTokenService implements TokenService {
 	 */
 	@Override
 	public Mono<ClientResponse> sendToken(TokenRequest request) {
-		log.info("Send request to partner"); //$NON-NLS-1$
+		log.debug("Send request to partner"); //$NON-NLS-1$
 		String uriRequest = String.format("%s%s", partnerTokenDomainUrl, resourceURI); //$NON-NLS-1$
 		return WebClient
 		  .create(partnerTokenDomainUrl)
@@ -83,7 +83,7 @@ public final class NotifyeTokenService implements TokenService {
 
 	private String getHook() {
 		String hookUrl = System.getenv(HOOK_URL_ENV_KEY);
-		log.info("Adding HOOK URL: {}", hookUrl); //$NON-NLS-1$
+		log.debug("Adding HOOK URL: {}", hookUrl); //$NON-NLS-1$
 		return ( Objects.nonNull(hookUrl) ? hookUrl : "http://example.com" ); //$NON-NLS-1$
 	}
 
@@ -116,6 +116,5 @@ public final class NotifyeTokenService implements TokenService {
 				.append(tokenRequest.getPhoneNumber())
 				.toString();
 	}
-
 	
 }
