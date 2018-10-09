@@ -10,6 +10,28 @@ This application creates and sends a TOTP token to a phone number. Based on the 
   - Running in Windows, Linux, and Docker environments
   - Use application
 
+### Architectural Decisions
+
+I have chosen not to implement the algorithm for generating tokens *TOTP* or *HOTP* directly. 
+Since there are many libraries and services that offer this functionality to me. 
+Since these algorithms are specified by the IETF via **RFCs 4226 and 6238** I decided to use an external API that implements these specifications 
+and provides an abstraction layer that facilitates my work.
+In this case I chose to write a Java / Springboot Webflux application that bridges the server application to the authentication client 
+and the tokens generation mechanism. This application implements the external API responsible for generating and sending the token via cell phone, 
+as well as the validation of the generated token. 
+This external API is called Notify-e (of which I am a founding member and therefore no cost to use. :-)).
+
+The basic flow of interaction can be described as follows:
+
+1. The end user requests the login in the application of our client.
+2. The frontend application sends a POST to our API.
+3. Our API sends a request to the external API informing the data of the end user (telephone), as well as the time of expiration of the token that we wish.
+4. The external API generates the Token and sends it to the end user.
+5 The end user receives the message containing the token code and informs on our client's website.
+6. The site in turn sends us a GET request informing the code informed.
+7. We consume the external API that tells us whether the code is valid or not.
+8. We return the response to the caller.
+
 #### Dependencies
 
   - Java 8
@@ -141,7 +163,7 @@ $ docker run -d \
    
 ```
 
-# Logs looks like this...
+Logs looks like this...
 ```sh
 $ docker logs -t -f 2fa-service
 
