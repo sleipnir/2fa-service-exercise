@@ -32,6 +32,12 @@ The basic flow of interaction can be described as follows:
 7. We consume the external API that tells us whether the code is valid or not.
 8. We return the response to the caller.
 
+I have defined that the application should provide some minimal security mechanism. And for simplicity I chose to work with a level of authentication 
+and basic authorization.
+For this reason, it is necessary to send in all requests, except for the Hook feature, the Authorization header with the Basic type and the encrypted user 
+and password as defined in RFC2617.
+The user and password will be informed in the contact email.
+
 #### Dependencies
 
   - Java 8
