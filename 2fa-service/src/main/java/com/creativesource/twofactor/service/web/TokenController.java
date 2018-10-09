@@ -32,19 +32,6 @@ public class TokenController {
 		this.tokenService = tokenService;
 	}
 	
-	/*
-	 * Request Example:
-	 * curl -X POST \
-	 *	  http://localhost:8080/auth/tokens \
-	 *	  -H 'Authorization: Basic c2Vuc2VkaWE6c2Vuc2VkaWEqMTIz' \
-	 *	  -H 'Content-Type: application/json' \
-	 *	  -d '{
-	 *		"countryCode" : "+55",
-	 *		"areaCode" : "11",
-	 *		"phoneNumber" : "959734939",
-	 *		"tokenTTL" : 300
-	 *	}'
-	 * */
 	@PostMapping
 	public Mono<ResponseEntity<TokenResponse>> createToken(@RequestBody @Valid TokenRequest tokenRequest){
 		return tokenService.sendToken(tokenRequest)
@@ -52,9 +39,6 @@ public class TokenController {
 					.doOnError(this::errorHandler);
 	}
 	
-	/*
-	 * curl -X GET http://localhost:8080/auth/tokens?code=569868 -H 'Authorization: Basic c2Vuc2VkaWE6c2Vuc2VkaWEqMTIz'
-	 * */
 	@GetMapping
 	public Mono<ResponseEntity<TokenStatus>> validateToken(@RequestParam("code") String code){
 		return tokenService.getTokenStatus(code)
@@ -69,14 +53,13 @@ public class TokenController {
 		TokenResponseBuilder builder = TokenResponse.builder();
 	
 		if(!isSuccessful(response)) {
-			//return error message
 			builder.code(422);
-			builder.message("Nao foi possivel processar sua solicitacao");
+			builder.message(Messages.getString("Messages.NOT_PROCESS_SOLICITATION_MSG"));
 			return Mono.just(ResponseEntity.unprocessableEntity().body(builder.build()));
 		}
 		
 		builder.code(202);
-		builder.message("Token encaminhado ao destinatario");
+		builder.message(Messages.getString("Messages.TOKEN_FORWARD_MSG"));
 		return Mono.just(ResponseEntity.accepted().body(builder.build()));
 	}
 
@@ -90,7 +73,7 @@ public class TokenController {
 				.body(
 					TokenResponse.builder()
 						.code(500)
-						.message(String.format("Nao foi possivel processar sua solicitacao. %s", error.getMessage()))
+						.message(String.format(Messages.getString("Messages.NOT_PROCESS_SOLICITATION_REASON_MSG"), error.getMessage()))
 						.build()));
 	}
 
