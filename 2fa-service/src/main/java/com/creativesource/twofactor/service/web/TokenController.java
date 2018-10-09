@@ -17,6 +17,7 @@ import com.creativesource.twofactor.service.TokenService;
 import com.creativesource.twofactor.service.model.TokenRequest;
 import com.creativesource.twofactor.service.model.TokenResponse;
 import com.creativesource.twofactor.service.model.TokenResponse.TokenResponseBuilder;
+import com.creativesource.twofactor.service.model.TokenStatus;
 
 import reactor.core.publisher.Mono;
 
@@ -55,8 +56,10 @@ public class TokenController {
 	 * curl -X GET http://localhost:8080/auth/tokens?code=569868 -H 'Authorization: Basic c2Vuc2VkaWE6c2Vuc2VkaWEqMTIz'
 	 * */
 	@GetMapping
-	public Mono<ResponseEntity<String>> validateToken(@RequestParam("code") String code){
-		return Mono.just(ResponseEntity.ok("OK"));
+	public Mono<ResponseEntity<TokenStatus>> validateToken(@RequestParam("code") String code){
+		return tokenService.getTokenStatus(code)
+				.flatMap(response -> response.bodyToMono(TokenStatus.class))
+				.flatMap(tokenStatus -> Mono.just(ResponseEntity.ok(tokenStatus)));
 	}
 	
 	private Mono<ResponseEntity<TokenResponse>> handleStatus(ClientResponse response){

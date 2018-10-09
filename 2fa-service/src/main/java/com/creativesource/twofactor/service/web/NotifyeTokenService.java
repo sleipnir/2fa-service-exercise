@@ -60,8 +60,14 @@ public final class NotifyeTokenService implements TokenService {
 	
 	@Override
 	public Mono<ClientResponse> getTokenStatus(String code) {
-		// TODO Auto-generated method stub
-		return null;
+		String uriRequest = String.format("%s%s?code=%s", partnerTokenDomainUrl, resourceURI, code); //$NON-NLS-1$
+		return WebClient
+				  .create(partnerTokenDomainUrl)
+				  .get()
+				  .uri(URI.create(uriRequest))
+				  .header(AUTHORIZATION_HEADER, String.format("Bearer %s", partnerToken)) //$NON-NLS-1$
+				  .accept(MediaType.APPLICATION_JSON)
+				  	.exchange();
 	}
 
 	
