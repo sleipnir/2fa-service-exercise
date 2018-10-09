@@ -22,6 +22,8 @@ public final class HttpUtils {
 	public static ExchangeFilterFunction logResposneStatus() {
 	    return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
 	        log.debug("Response Status {}", clientResponse.statusCode());
+	        clientResponse.headers().asHttpHeaders()
+            	.forEach((name, values) -> values.forEach(value -> log.debug("{}={}", name, value)));
 	        return Mono.just(clientResponse);
 	    });
 	}

@@ -1,7 +1,12 @@
 package com.creativesource.twofactor.service.web;
 
+import static com.creativesource.twofactor.service.HttpUtils.logRequest;
+import static com.creativesource.twofactor.service.HttpUtils.logResposneStatus;
+
 import java.net.URI;
 import java.util.Objects;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -31,6 +36,8 @@ public final class NotifyeTokenService implements TokenService {
 	private final String resourceURI;
 	private final String partnerToken;
 	
+	private WebClient client;
+	
 	public NotifyeTokenService(@Value("${app.partner.token.baseUrl}") final String partnerTokenDomainUrl, 
 						@Value("${app.partner.token.createRequestUrl}") final String resourceURI,
 						@Value("${app.partner.token.authToken}") final String partnerToken) {
@@ -40,6 +47,17 @@ public final class NotifyeTokenService implements TokenService {
 		this.partnerToken = partnerToken;
 	}
 	
+	@PostConstruct
+	public void setup() {
+		this.client = WebClient.builder()
+				.baseUrl(partnerTokenDomainUrl)
+				.defaultHeader(AUTHORIZATION_HEADER, String.format("Bearer %s", partnerToken)) //$NON-NLS-1$
+				.defaultHeader(CONTENT_TYPE_HEADER, MediaType.APPLICATION_JSON_VALUE)
+				.filter(logRequest())
+				.filter(logResposneStatus())
+				.build();
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.creativesource.twofactor.service.web.TokenService#sendToken(com.creativesource.twofactor.service.model.TokenRequest)
 	 */
@@ -47,27 +65,23 @@ public final class NotifyeTokenService implements TokenService {
 	public Mono<ClientResponse> sendToken(TokenRequest request) {
 		log.debug("Send request to partner"); //$NON-NLS-1$
 		String uriRequest = String.format("%s%s", partnerTokenDomainUrl, resourceURI); //$NON-NLS-1$
-		return WebClient
-		  .create(partnerTokenDomainUrl)
-		  .post()
-		  .uri(URI.create(uriRequest))
-		  .body(Mono.just(createRequestBody(request)), NotifyeRequest.class)
-		  .header(AUTHORIZATION_HEADER, String.format("Bearer %s", partnerToken)) //$NON-NLS-1$
-		  .header(CONTENT_TYPE_HEADER, MediaType.APPLICATION_JSON_VALUE)
-		  .accept(MediaType.APPLICATION_JSON)
-		  	.exchange();
+		return client
+				.post()
+				.uri(URI.create(uriRequest))
+				.body(Mono.just(createRequestBody(request)), NotifyeRequest.class)
+				.accept(MediaType.APPLICATION_JSON)
+					.exchange();
 	}
 	
 	@Override
 	public Mono<ClientResponse> getTokenStatus(String code) {
-		String uriRequest = String.format("%s%s?code=%s", partnerTokenDomainUrl, resourceURI, code); //$NON-NLS-1$
-		return WebClient
-				  .create(partnerTokenDomainUrl)
-				  .get()
-				  .uri(URI.create(uriRequest))
-				  .header(AUTHORIZATION_HEADER, String.format("Bearer %s", partnerToken)) //$NON-NLS-1$
-				  .accept(MediaType.APPLICATION_JSON)
-				  	.exchange();
+		return client
+				.get()
+				.uri(uriBuilder -> uriBuilder.path(resourceURI)
+	                    .queryParam("code", code)
+	                    .build())
+				.accept(MediaType.APPLICATION_JSON)
+			  		.exchange();
 	}
 
 	
