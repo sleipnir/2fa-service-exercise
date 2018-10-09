@@ -16,9 +16,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Builder
+@EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "ttl", "redirectTo", "mode", "acceptedOnlyFromSameDomain" })
 public class Token implements Serializable {

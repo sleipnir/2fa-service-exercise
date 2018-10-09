@@ -17,8 +17,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Builder
+@EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "countryCode", "areaCode", "number" })
 public @Data class PhoneNumber implements Serializable {
