@@ -27,8 +27,8 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/auth/tokens?code={{code}}",
-					"protocol": "http",
+					"raw": "https://localhost:8080/auth/tokens?code={{code}}",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
@@ -77,8 +77,8 @@
 					"raw": "{\n\t\"countryCode\" : \"+55\",\n\t\"areaCode\" : \"11\",\n\t\"phoneNumber\" : \"959734939\",\n\t\"tokenTTL\" : 300\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/auth/tokens",
-					"protocol": "http",
+					"raw": "https://localhost:8080/auth/tokens",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
