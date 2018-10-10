@@ -40,6 +40,7 @@ For this reason, it is necessary to send in all requests, except for the Hook fe
 and password as defined in *RFC2617*.
 The user and password will be informed in the contact email.
 
+
 #### Dependencies
 
   - Java 8
@@ -200,11 +201,13 @@ Two Factor Authentication Service
 You can test the application in two ways, via Postman or via Curl directly from the command line.
 Import the 2fa-service-api.json file, which is located in the project root, into your Postman application if you wish to run via Postman Collections, or follow the examples below to test directly via CURL
 
+*Note: Before your try to run the requests in Postman application, please disable ssl verification!
+
 Send Request for create TOTP Token and send This Token to the client via phone number:
 
 ```sh
 $ curl -X POST \
-  http://localhost:8080/auth/tokens \
+  https://localhost:8080/auth/tokens \
   -H 'Authorization: Basic c2Vuc2VkaWE6c2Vuc2VkaWEqMTIz' \
   -H 'Cache-Control: no-cache' \
   -H 'Content-Type: application/json' \
@@ -221,7 +224,7 @@ Do not forget to enter a valid phone number that you have access to to receive t
 Send Request for validate the received token:
 ```sh
 $ curl -X GET \
-  'http://localhost:8080/auth/tokens?code=274008' \
+  'https://localhost:8080/auth/tokens?code=274008' \
   -H 'Authorization: Basic c2Vuc2VkaWE6c2Vuc2VkaWEqMTIz' \
   -H 'Cache-Control: no-cache'
 ```
