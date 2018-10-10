@@ -27,8 +27,8 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "https://localhost:8080/auth/tokens?code={{code}}",
-					"protocol": "https",
+					"raw": "http://localhost:8080/auth/tokens?code={{code}}",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
