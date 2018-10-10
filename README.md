@@ -207,7 +207,7 @@ Send Request for create TOTP Token and send This Token to the client via phone n
 
 ```sh
 $ curl -X POST \
-  https://localhost:8080/auth/tokens \
+  http://localhost:8080/auth/tokens \
   -H 'Authorization: Basic c2Vuc2VkaWE6c2Vuc2VkaWEqMTIz' \
   -H 'Cache-Control: no-cache' \
   -H 'Content-Type: application/json' \
@@ -224,7 +224,7 @@ Do not forget to enter a valid phone number that you have access to to receive t
 Send Request for validate the received token:
 ```sh
 $ curl -X GET \
-  'https://localhost:8080/auth/tokens?code=274008' \
+  'http://localhost:8080/auth/tokens?code=274008' \
   -H 'Authorization: Basic c2Vuc2VkaWE6c2Vuc2VkaWEqMTIz' \
   -H 'Cache-Control: no-cache'
 ```
