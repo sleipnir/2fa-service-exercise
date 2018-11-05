@@ -40,6 +40,16 @@ For this reason, it is necessary to send in all requests, except for the Hook fe
 and password as defined in *RFC2617*.
 The user and password will be informed in the contact email.
 
+In summary, the solution should contain the following characteristics:
+
+1. Be self-contained (able to execute without external dependencies);
+2. Can be executed bare-metal or via container;
+3. Be scalable and stateless;
+4. Provide an authentication / authorization mechanism;
+5. Respecting the RFC6238 specification;
+6. Run on HTTP or HTTPS without changes in source code;
+7. Use of the benefits of reactive programming;
+
 
 #### Dependencies
 
