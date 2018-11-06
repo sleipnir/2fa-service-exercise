@@ -33,7 +33,11 @@ The basic flow of interaction can be described as follows:
 7. We consume the external API that tells us whether the code is valid or not.
 8. We return the response to the caller.
 
+Simplified Request Token Diagram
 ![Request Diagram](request-diagram.jpeg?raw=true "Request Diagram")
+
+Simplified Validation Token Diagram
+![Request Diagram](validation-diagram.jpeg?raw=true "Validation Diagram")
 
 
 I have defined that the application should provide some minimal security mechanism. And for simplicity I chose to work with a level of authentication 
